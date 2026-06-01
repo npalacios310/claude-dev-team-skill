@@ -1,5 +1,5 @@
 {
-  "name": "claude-dev-team",
+  "name": "claude-dev-team-skill",
   "version": "0.1.0",
   "description": "A custom software delivery team for Claude Code: tech-lead orchestrator, project-planner, design-engineer, backend-engineer, qa-breaker, security-auditor, doc-writer, devops-deploy, and project-scout — plus project-kickstart and a crafted, non-generic design-language skill. Stack-agnostic.",
   "author": {

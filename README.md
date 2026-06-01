@@ -1,4 +1,4 @@
-# claude-dev-team
+# claude-dev-team-skill
 
 A portable, custom **software delivery team** for Claude Code — built to start
 new projects and bring inherited ones up to standard, across any stack.
@@ -28,11 +28,11 @@ new projects and bring inherited ones up to standard, across any stack.
 
 ### As a plugin (recommended — portable across machines/projects)
 
-1. Push this folder to a GitHub repo (e.g. `your-user/claude-dev-team`).
+1. Push this folder to a GitHub repo (e.g. `npalacios310/claude-dev-team-skill`).
 2. In Claude Code:
    ```
-   /plugin marketplace add https://github.com/your-user/claude-dev-team
-   /plugin install claude-dev-team@claude-dev-team
+   /plugin marketplace add https://github.com/npalacios310/claude-dev-team-skill
+   /plugin install claude-dev-team-skill@claude-dev-team-skill
    ```
 
 ### As a user-level copy (this machine only)
