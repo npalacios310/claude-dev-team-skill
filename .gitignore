@@ -1,0 +1,12 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node (if you add tooling later)
+node_modules/
+*.log
+
+# Local design reference images (optional — remove this line if you want them tracked)
+# skills/design-language/refs/
