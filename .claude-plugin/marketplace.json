@@ -7,7 +7,7 @@
     {
       "name": "claude-dev-team-skill",
       "source": "./",
-      "description": "Custom software delivery team (planner, design, backend, QA, security, docs, devops) coordinated by a tech-lead orchestrator, with a crafted non-generic design language."
+      "description": "Full-lifecycle software delivery team (product strategy, planning, crafted design via curated Design Kits with adversarial design-critic screenshot reviews, backend, QA, security, docs, deploy, and post-launch competitive intelligence) coordinated by a tech-lead orchestrator."
     }
   ]
 }
