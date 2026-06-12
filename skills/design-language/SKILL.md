@@ -352,5 +352,38 @@ what you like, the rule to extract, and a do/don't. Drop screenshots in
 - Image: refs/example.png
 -->
 
-_(No personal references added yet — paste screenshots or notes and we'll
-distill them into rules here.)_
+### Reference: Floating glass navbar — frontend-joe/js-components (navbars/navbar-1)
+- Source: https://github.com/frontend-joe/js-components/tree/main/navbars/navbar-1
+  (the whole repo is a library of crafted HTML/CSS/JS components — navbars,
+  modals, sliders, carousels, logins — worth mining for more references.)
+- What I like: a floating pill navbar with a real glass treatment, and a single
+  shared submenu panel that *slides* under whichever item is hovered instead of
+  each item owning its own dropdown.
+- Rules to apply:
+  - **Floating pill nav**: `position: fixed` inset 16px from top/left/right;
+    radius = half the bar height (72px tall → 36px radius) so it reads as a pill.
+  - **Real glass, not gray transparency**: translucent white built with
+    `color-mix(in oklch, rgb(255 255 255 / 8-12%) ~72%, transparent)` +
+    `backdrop-filter: blur(16px) saturate(1.2)`. The `saturate(1.2)` is what
+    keeps the background colors alive behind the glass.
+  - **Edge lighting sells the glass**: two *inset* box-shadows — a 1px top
+    highlight (white ~12-15%) plus a faint 0.06rem full border (white ~6%) —
+    instead of an outer drop shadow.
+  - **One sliding submenu, not N dropdowns**: a single fixed panel; on hover,
+    measure the item with `getBoundingClientRect()` and move the panel with
+    `translate` so it glides to align under the item (0.3s). Toggle content
+    visibility inside the panel; animate `opacity + visibility`, never `display`.
+  - **Quiet hover affordance**: idle items at `opacity: 0.6` → 1 on hover with a
+    0.3s transition; section separation with a 1px low-alpha `border-left`, not
+    boxes.
+  - **Event delegation**: one `mouseover` listener on the menu container using
+    `closest("li")`, and `mouseleave` on the container to close — not a listener
+    per item.
+- Do: reserve the glass treatment for surfaces that float over rich/imagery
+  backgrounds (it dies on flat white); keep the glass tint white-based so it
+  works over any background hue.
+- Don't: copy its gaps — the demo uses Poppins (banned as a primary face; apply
+  the technique with the active kit's faces), is hover-only (add focus/click and
+  touch equivalents per our a11y rules — hover-only submenus are unusable on
+  mobile), and keys submenus off `innerText` (use `data-*` attributes instead so
+  labels can change without breaking behavior).
