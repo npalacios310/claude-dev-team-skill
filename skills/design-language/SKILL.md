@@ -426,3 +426,42 @@ what you like, the rule to extract, and a do/don't. Drop screenshots in
   don't ship a dark mode that's just inverted grays — re-derive every tint;
   don't mix highlight styles (tinted pill for active + colored text for hover is
   enough — no left border stripes).
+
+### Reference: Sliding hover highlight + account switcher — "Pulsr" profile menu (Instagram captures)
+- Source: user-supplied screenshot of the same demo family as the sidebar above
+  (capture caught the effect mid-glide — two rows tinted at once — which is the
+  tell of how it's built). Companion to the sliding submenu in the
+  frontend-joe navbar reference: same ONE-moving-element philosophy.
+- What I like: the hover state is a single soft accent pill that *glides*
+  vertically between menu rows instead of each row toggling its own background,
+  with the row's icon + label tinting to the accent as the pill arrives. The
+  menu itself is a masterclass in dropdown anatomy.
+- Rules to apply:
+  - **One traveling highlight, not N hover states**: render a single
+    absolutely-positioned rounded rect behind the rows; on hover/focus, measure
+    the target row (offsetTop/height) and move the pill with `translate` +
+    `transition: ~150-200ms ease-out`. Tint the row's icon/label via a
+    `color` transition with the same duration so color arrives with the pill.
+  - **Keyboard + reduced motion**: the pill must follow `:focus-visible` row
+    changes too (arrow-key navigation), and snap instantly (no glide) under
+    `prefers-reduced-motion`.
+  - **Dropdown row anatomy**: icon left, label, right-aligned muted keyboard
+    shortcut; tall comfortable rows (~52-56px) with the pill radius matching
+    the row inset; full-width hairlines only between GROUPS, never between rows.
+  - **Account switcher section**: uppercase letterspaced muted label ("SWITCH
+    ACCOUNT"); each account row = avatar + two-line identity (name +
+    email-in-muted); the ACTIVE account keeps a persistent tinted pill plus a
+    small green presence dot right-aligned — same pill visual as hover, so
+    "current" and "considering" share one visual language.
+  - **Anchored to a floating toolbar pill**: the menu drops from a floating
+    rounded toolbar (search / messages / bell / avatar) — consistent with the
+    floating-pill nav pattern; menu and toolbar share radius and elevation.
+  - **Scoped exit action**: "Sign out all accounts" sits last behind a hairline
+    in muted gray — quieter than a single-account sign-out (red), because its
+    scope is wider and accidental clicks hurt more.
+- Do: reuse this traveling-pill technique for tabs, segmented controls, and
+  sidebar hovers — it's one pattern, many homes; keep the glide under 200ms so
+  it feels responsive, not showy.
+- Don't: let the pill glide on first open (it should appear AT the first
+  hovered row, then glide on subsequent moves); don't combine the traveling
+  pill with per-row background hovers — pick one mechanism per surface.
