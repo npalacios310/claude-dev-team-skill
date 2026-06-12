@@ -465,3 +465,44 @@ what you like, the rule to extract, and a do/don't. Drop screenshots in
 - Don't: let the pill glide on first open (it should appear AT the first
   hovered row, then glide on subsequent moves); don't combine the traveling
   pill with per-row background hovers — pick one mechanism per surface.
+
+### Reference: File-upload state machine — "Pulsr" upload card (Instagram captures)
+- Source: user-supplied screenshots covering the FULL flow (idle → drag-over →
+  uploading → success) of the same demo family. The lesson is the state
+  grammar, not the styling.
+- What I like: the dropzone is one component that re-skins itself per phase and
+  always tells you what happens next — the user never has to guess where the
+  process stands.
+- Rules to apply:
+  - **Dropzone state grammar**: idle = dashed hairline border on a soft tint;
+    drag-over = border turns SOLID in the accent and the tint deepens (the
+    dashed→solid flip is the "I will catch this" signal); success = the entire
+    zone re-skins to semantic green — border, tint, AND the icon swaps to a
+    check. Color never changes alone: border style or icon changes with it.
+  - **Constraints up front, not as errors**: the idle zone states both input
+    methods in one line ("Drop files here or click to browse") and the rules
+    below it ("JPEG, PNG up to 25 MB each") — formats and limits are shown
+    BEFORE the user picks wrong, not thrown back as a rejection after.
+  - **File row anatomy**: real thumbnail preview, middle-truncated filename
+    (start + extension always visible), muted size, a thin per-file progress
+    bar, and an X to remove; on completion the row's progress fills green and
+    a green check replaces/joins the X. Remove stays available during upload.
+  - **Two levels of progress**: per-file bars + one aggregate (progress ring +
+    "2 files · 2.7 MB" → "2 files uploaded") in the footer status bar — detail
+    and summary, never just one.
+  - **Disabled primary = washed accent, not gray**: the Upload button when
+    inert keeps the accent hue at low saturation/opacity — clearly disabled but
+    still branded; it goes solid the moment files exist.
+  - **States always point forward**: the success zone says "Drop more files or
+    clear to start over" — every terminal state names the next available
+    actions instead of dead-ending.
+  - **Card anatomy**: icon-in-soft-tile + title + muted subtitle header,
+    circular ghost icon-buttons (info/settings) top-right, hairline divider
+    before the body, action bar at the bottom (status left, secondary +
+    primary right).
+- Do: make the whole zone clickable AND keyboard-triggerable (it's a button
+  semantically, with a visually-hidden file input); announce phase changes to
+  screen readers (aria-live) since the zone communicates visually.
+- Don't: signal drag-over with color alone (pair it with the dashed→solid
+  border flip); don't hide per-file remove during upload; don't dead-end the
+  success state without next actions; don't gray-out the disabled primary.
