@@ -387,3 +387,42 @@ what you like, the rule to extract, and a do/don't. Drop screenshots in
   touch equivalents per our a11y rules — hover-only submenus are unusable on
   mobile), and keys submenus off `innerText` (use `data-*` attributes instead so
   labels can change without breaking behavior).
+
+### Reference: Collapsible app sidebar with theme parity — "Pulsr" demo (Instagram captures)
+- Source: user-supplied screenshots of a dashboard-sidebar UI reel (demo app
+  "Pulsr"). Pairs naturally with the **Utility Dashboard** kit.
+- What I like: one sidebar that does everything calmly — collapses to an icon
+  rail, swaps light/dark with full parity, and tucks account actions + the theme
+  toggle into a profile flyout instead of scattering them.
+- Rules to apply:
+  - **Two-state sidebar**: expanded (~280px: logo + search + labeled nav) ⇄ icon
+    rail (~72px: same icons, same order, active state still visible). The
+    collapse control lives in the sidebar header next to the logo; persist the
+    chosen state across sessions.
+  - **Active item = tinted pill, not a highlight bar**: the active row gets a
+    soft accent-tint background (accent at ~8-12% alpha — pale pink in light
+    mode, deep wine in dark), full-contrast label, and the count badge as a
+    solid-accent circle right-aligned in the same row. One accent does all the
+    signaling; everything idle stays muted.
+  - **Theme parity from tokens**: light and dark are the SAME layout with
+    swapped token values — near-black surfaces (never pure #000) and the
+    accent-tint backgrounds re-derived per theme, not just inverted. If you
+    can't show both themes looking finished, the tokens are wrong.
+  - **Profile flyout from the bottom user card**: avatar + name + email card
+    anchors a menu of icon rows with right-aligned muted keyboard shortcuts
+    (⌘⇧P style); the theme toggle is an in-menu row with a real switch and an
+    icon that swaps sun ⇄ moon with the state; the destructive action (Sign
+    Out) sits last, separated, in semantic red.
+  - **Sections**: hairline divider + uppercase letterspaced muted label
+    ("INTEGRATIONS") — never boxes.
+  - **Third-party entries use brand tiles**: small rounded-square brand icons
+    (Wix/Vercel/Framer) instead of monochrome line icons — instant recognition
+    without breaking the calm; first-party nav stays in line icons.
+  - **Presence ring on the avatar** (thin status ring) instead of a floating
+    status dot.
+- Do: keep exactly ONE badge style (solid accent circle) for counts everywhere;
+  give the rail state tooltips on hover/focus so icon-only nav stays learnable.
+- Don't: bury the theme toggle in a settings page (it belongs one click away);
+  don't ship a dark mode that's just inverted grays — re-derive every tint;
+  don't mix highlight styles (tinted pill for active + colored text for hover is
+  enough — no left border stripes).
