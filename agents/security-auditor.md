@@ -25,6 +25,14 @@ at hand only.
 Related ECC: `security-review` skill, agent `security-reviewer`, and AgentShield
 (`npx ecc-agentshield scan`) for Claude Code config/hooks/MCP risks.
 
+## Scope boundary: skills, plugins & MCP
+You own the application's **own source code** (OWASP-style: code, config,
+dependencies, secrets). Vetting **AI agent skills, MCP servers, or third-party
+plugins** — whether the team installs them or ships them — is **delegated to the
+`skill-auditor` agent**, which runs NVIDIA SkillSpector (Apache-2.0,
+<https://github.com/NVIDIA/skillspector>). Hand that work off so the two audits
+never overlap or get skipped.
+
 ## Audit Areas (OWASP-aligned)
 1. **Secrets** — committed keys, tokens, `.env` in VCS, secrets in logs/history.
 2. **Injection** — SQL/NoSQL/command/template injection; unparameterized queries.

@@ -7,7 +7,7 @@
     {
       "name": "claude-dev-team-skill",
       "source": "./",
-      "description": "Full-lifecycle software delivery team (product strategy, planning, crafted design via curated Design Kits with adversarial design-critic screenshot reviews, backend, QA, security, docs, deploy, and post-launch competitive intelligence) coordinated by a tech-lead orchestrator."
+      "description": "Full-lifecycle software delivery team (product strategy, planning, crafted design via curated Design Kits with adversarial design-critic screenshot reviews, backend, QA, security, skill/plugin/MCP security vetting via the skill-auditor agent powered by NVIDIA SkillSpector, docs, deploy, and post-launch competitive intelligence) coordinated by a tech-lead orchestrator."
     }
   ]
 }

@@ -5,9 +5,9 @@ new projects and bring inherited ones up to standard, across any stack.
 
 ## What's inside
 
-**Lifecycle**: 0 Solve (optional) → 1 Plan → 2 Build (+ design-critic loop) → 3 QA → 4 Security → 5 Docs → 6 Deploy → 7 Intelligence (optional, schedulable).
+**Lifecycle**: 0 Solve (optional) → 1 Plan → 2 Build (+ design-critic loop) → 3 QA → 4 Security (code audit + skill/plugin/MCP supply-chain vetting via skill-auditor / NVIDIA SkillSpector) → 5 Docs → 6 Deploy → 7 Intelligence (optional, schedulable).
 
-### Agents (12)
+### Agents (13)
 | Agent | Role |
 |-------|------|
 | `tech-lead-orchestrator` | Runs the pipeline and routes work between agents |
@@ -18,6 +18,7 @@ new projects and bring inherited ones up to standard, across any stack.
 | `design-critic` | Adversarial visual reviewer — judges the real screenshots, loops with design-engineer |
 | `qa-breaker` | Adversarial QA — tries to break the code, loops with the dev |
 | `security-auditor` | OWASP-style review before delivery |
+| `skill-auditor` | Vets AI agent skills / MCP servers / third-party plugins for vulnerabilities + malicious patterns via NVIDIA SkillSpector — returns a risk score and an install/ship gate verdict |
 | `doc-writer` | README, codemaps, API docs, ADRs |
 | `devops-deploy` | CI/CD, containers, deploy + rollback |
 | `intel-watcher` | Optional, recurring post-launch competitive-intelligence digest — built to run on a schedule via `/schedule` |
@@ -70,6 +71,14 @@ Use the solve-strategist to research the market for <product idea> and produce a
 Use the intel-watcher to set up a recurring competitive-intelligence digest for <product> via /schedule.
 ```
 
+```
+Use the skill-auditor to vet https://github.com/<owner>/<skill-repo> before I install it, and give me an install gate verdict.
+```
+
+```
+Use the skill-auditor to scan our skills/ directory before we publish, and block on any CRITICAL/HIGH findings.
+```
+
 ## Notes
 
 - **Stack-agnostic**: every agent detects the project's stack and adapts.
@@ -78,4 +87,5 @@ Use the intel-watcher to set up a recurring competitive-intelligence digest for 
 - `design-engineer` must deliver real screenshots (360/768/1280) and
   `design-critic` reviews them — loop driven by the tech-lead, max 3 rounds,
   then it escalates to the user.
+- `skill-auditor` wraps **NVIDIA SkillSpector** (Apache-2.0, <https://github.com/NVIDIA/skillspector>) as an external tool — we integrate it, we don't vendor or copy its code. Static scans need no API key (the optional LLM semantic pass does); see `docs/SKILL-SECURITY.md` for setup.
 - `author` / `owner` in `.claude-plugin/*.json` are set to `npalacios310` — change them if you fork.
