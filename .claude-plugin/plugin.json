@@ -1,6 +1,6 @@
 {
   "name": "claude-dev-team-skill",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A full-lifecycle software delivery team for Claude Code: product strategy and market research (solve-strategist), planning (project-planner), crafted design via curated Design Kits with adversarial design-critic screenshot reviews (design-engineer), backend (backend-engineer), adversarial QA (qa-breaker), security (security-auditor), skill/plugin/MCP security vetting via the skill-auditor agent (powered by NVIDIA SkillSpector), docs (doc-writer), deploy (devops-deploy), and post-launch competitive intelligence (intel-watcher) — coordinated by a tech-lead orchestrator. Stack-agnostic.",
   "author": {
     "name": "npalacios310",

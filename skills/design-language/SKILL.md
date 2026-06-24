@@ -13,13 +13,18 @@ apply this before building UI.
 
 > Provenance note: the seed principles below are general, widely-accepted design
 > best practices, restated in our own words. They are not copied verbatim from
-> any third-party or leaked document. Add your own references freely.
+> any third-party or leaked document. The guardrails, token architecture, and
+> expanded "AI-look" tells additionally draw on two studied references —
+> impeccable (Paul Bakaus, Apache-2.0) and ui-ux-pro-max-skill (claudekit, MIT) —
+> adapted in our own words, not copied. Add your own references freely.
 
 ## Core Principles
 
 ### Typography
-- The typeface carries the design. **Avoid overused defaults** (Inter, Roboto,
-  Arial, system stacks); choose a distinctive, intentional face that fits the tone.
+- The typeface carries the design. On **brand/marketing** surfaces, avoid overused
+  defaults (Inter, Roboto, Arial) and choose a distinctive, intentional face that
+  fits the tone. On **dense product/app** UI, a well-tuned system stack is
+  legitimate — consistency and legibility outrank novelty there (see *Register* below).
 - Clear type scale and hierarchy; don't let everything sit at one weight/size.
 - Use `text-wrap: pretty` / `balance`; generous minimum sizes; ≥44px touch targets.
 
@@ -49,13 +54,72 @@ apply this before building UI.
 - Semantic HTML, labeled controls, visible focus, logical tab order.
 - WCAG AA contrast; never rely on color alone.
 
+### Global craft guardrails (any kit)
+Hard, checkable thresholds that hold no matter which kit is chosen — if a value
+breaks one, it's wrong, not a taste call:
+- Display/heading letter-spacing **≥ −0.04em** (tighter and the letters touch).
+- Hero `clamp()` max **≤ ~6rem (96px)**; any `clamp()` max **≤ 2.5×** its min.
+- Body measure **65–75ch**; type-scale step ratio **≥ 1.25**; body **≥ 16px**.
+- Line-height **~1.5–1.7** for body, **~1.1–1.3** for headings.
+- Touch target **≥ 44px**.
+- Color budget ≈ **60% ground / 30% secondary surface / 10% accent** — flag any
+  layout where the accent visibly exceeds its 10% share.
+
+### Interactive states
+Every interactive element ships the **full set** of states, designed in this
+priority order (the higher state wins when two apply):
+**disabled > loading > active > focus > hover > default**.
+- Visible focus ring via `:focus-visible` (never bare `:focus`, which fires on mouse too).
+- Inline error states next to the field that caused them.
+- An under-specified state — missing hover, focus, disabled, or loading — is
+  itself an AI-look tell, because hand-crafted UI accounts for all of them.
+
+### Register: brand vs product
+Two registers, two rulebooks — name which one a surface is in before designing it:
+- **Brand / marketing** — *design IS the product*. Permission for bold color,
+  distinctive typefaces, ambitious motion, and fluid `clamp()` headings.
+- **Product / app** — *design SERVES the product*. Prefer fixed `rem` scales,
+  treat consistency as an affordance, and accept that a well-tuned **system font
+  stack** is a legitimate choice for dense UI.
+
 ## "AI-look" Tells to Avoid
-- Generic purple/blue gradients, glowing blobs, floating 3D shapes for decoration.
-- **Rounded-corner cards with a left-border accent stripe** (classic giveaway).
-- Cards inside cards inside cards; uniform equal-weight boxes.
-- Decorative SVG "illustrations" as stand-in imagery; emoji as visual design.
-- Vague hero copy ("Empower your workflow"); random stock imagery.
-- Uniform spacing with no hierarchy.
+
+Treat this as a detector checklist: when a tell shows up, **rewrite, don't ship.**
+
+**Visual tells**
+- **One-sided accent border on a card** — the single biggest giveaway (the classic
+  rounded card + left/top accent stripe). Any accent border **≥2px on a rounded
+  element** reads as generated.
+- Overused / monoculture fonts: Inter and Roboto, yes — but **Fraunces, Space
+  Grotesk, Geist, and Plus Jakarta are now on reject lists too**; a single font
+  driving the whole page; flat type hierarchy (steps **< 1.25×**).
+- `background-clip: text` gradient text; **purple/violet heading text** (hue
+  ~260–310) and purple→cyan / purple→pink gradients.
+- Warm cream / beige as the default page background; nested cards (cards in cards);
+  the **icon-tile-above-heading "feature card"** template repeated in a grid.
+- Tiny tracked-uppercase or accent-bold **eyebrow chip above an h1**;
+  **01/02/03 section-number scaffolding** used as decoration.
+- Bounce / overshoot / elastic easing (cubic-bezier with a y outside **[−0.1, 1.1]**);
+  colored **glow shadow on a dark background**; oversized **italic-serif hero**.
+- Animating `width`/`height`/`padding`/`margin` instead of `transform`/`opacity`.
+- Generic purple/blue gradients, glowing blobs, floating 3D shapes for decoration;
+  decorative SVG "illustrations" as stand-in imagery; emoji as visual design;
+  uniform equal-weight boxes; uniform spacing with no hierarchy; random stock imagery.
+
+**Copy tells**
+- More than ~2 em-dashes in a body paragraph.
+- Aphoristic **"Not a feature. A platform."** cadence, especially repeated.
+- Buzzwords: *revolutionary, seamless, synergy, leverage, streamline, empower,
+  world-class, enterprise-grade, next-generation, cutting-edge.*
+
+### The category-reflex test (run it twice)
+- **First-order:** if someone could guess the theme + palette from the product
+  **category alone** (fintech → navy-and-gold, dev tool → terminal-dark), it's the
+  first training-data reflex — reject it.
+- **Second-order:** if they could guess it from **category + the obvious
+  anti-reference** ("fintech that *isn't* navy-and-gold → therefore terminal-dark"),
+  it's the trap one tier deeper — also reject.
+- Aim past both: the right direction isn't guessable from the category at all.
 
 ## Design Kits
 
@@ -207,6 +271,70 @@ Measured and assured — typography and restraint doing the work that trust requ
 - **Motion:** 250ms `ease-out`, fades only; no parallax, no scroll-jacking, no counters that animate numbers — figures appear set, like print.
 - **Signature details:** small-caps letterspaced labels (`font-variant-caps: all-small-caps`, 0.06em) for metadata and table headers; footnote-style disclosures with superscript markers that actually link; key figures set in Newsreader at display size with a one-line sans caption.
 - **Don't:** no urgency patterns — countdowns, "only 2 spots left", pulsing CTAs. Trust is the product; pressure destroys it.
+
+### Caveat on our own kits
+Honesty check: several of our kit faces (**Fraunces, Newsreader, Space Grotesk,
+Instrument Serif**) now appear on monoculture reject lists, and our warm-paper /
+cream backgrounds are a recognized 2026 default. So don't lean on the typeface
+alone for distinctiveness — lean on the whole **SYSTEM** (tokens, spacing rhythm,
+motion, signature details). Keep paper chroma genuinely low or substitute a true
+off-white, and **swap in an alternate face** whenever the obvious one would read
+as "AI default" for the category.
+
+## Design Token Architecture
+
+Tokens are layered, and each layer references **only the layer below it** — never
+a raw value above its own tier. (Layering idea adapted from ui-ux-pro-max.)
+
+- **PRIMITIVE** — raw values, no meaning attached.
+- **SEMANTIC** — purpose aliases pointing at primitives.
+- **COMPONENT** — element-specific tokens pointing at semantics.
+
+```css
+/* primitive */    --accent-500: oklch(0.55 0.16 250);
+/* semantic */     --color-primary: var(--accent-500);
+/* component */     --button-bg: var(--color-primary);
+```
+
+**Naming** follows `--{category}-{item}-{variant}-{state}`. Every fill ships its
+**on-color** via the `-foreground` pairing convention, and interactive states use
+`-hover` / `-active` suffixes:
+
+```css
+--color-primary: var(--accent-500);
+--color-primary-foreground: var(--neutral-50);   /* text/icon ON primary */
+--color-primary-hover: var(--accent-600);
+--color-primary-active: var(--accent-700);
+```
+
+**KEY RULE — dark mode overrides the SEMANTIC layer only.** Primitives are
+constant raw values; component tokens just follow their semantics. So a theme swap
+re-points semantics and nothing else moves — which is exactly our Pulsr **theme
+parity from tokens** reference: same layout, swapped semantic values, every tint
+re-derived rather than inverted.
+
+```css
+:root        { --color-primary: var(--accent-500); --color-bg: var(--neutral-50);  }
+:root.dark   { --color-primary: var(--accent-400); --color-bg: var(--neutral-950); }
+```
+
+**How our Kits map:** each Design Kit's OKLCH block **IS the semantic layer.** To
+complete the architecture: derive a 3-stop **primitive ramp** for the accent
+(−/＋ lightness for hover/active), keep the kit's names (`--accent`, `--surface`…)
+as semantic aliases, and add **component tokens only for the kit's signature
+element** — e.g. Dev Tool's `--code-bg`, Premium Commerce's sticky-cart bar.
+
+**OKLCH → Tailwind / shadcn channel trick:** store the *channels* (not the
+function call) so opacity composes, then wrap with `oklch()` at use:
+
+```css
+--accent: 0.55 0.16 250;                 /* channels only */
+color: oklch(var(--accent));             /* full opacity   */
+background: oklch(var(--accent) / 0.12); /* 12% tint        */
+```
+
+Map these onto shadcn's expected variable names (`--primary`, `--background`,
+`--ring`, …) so `npx shadcn add` inherits the kit's theme instead of its defaults.
 
 ## Screen Blueprints
 

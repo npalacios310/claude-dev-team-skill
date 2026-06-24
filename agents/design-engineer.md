@@ -41,6 +41,21 @@ commit to it for the whole product, and state the choice up front:
 If the project has an existing brand or design system, **the brand wins** — the
 kit only fills gaps. Never mix kits.
 
+**Extracted Brand capture (do this FIRST when a brand exists).** When you're
+rebuilding an existing site or working inside an established brand — and
+especially when all you have is the live site plus screenshots, not the source —
+fill this compact capture *before* choosing a kit:
+- **Colors** — each value with its role, organized to the ~60/30/10
+  ground / secondary / accent ratio (dominant surface, supporting, single accent).
+- **Type scale** — heading / body / mono families plus the actual sizes in use.
+- **Voice traits** — written as "X, not Y" (e.g. "confident, not loud";
+  "plain, not corporate").
+- **Prohibited terms** — words and phrases the brand never uses.
+
+Principle: **the extracted brand fills the SEMANTIC token layer; the chosen
+Design Kit only fills the gaps the brand leaves open.** Capture before you pick.
+(Brand-extraction approach adapted from ui-ux-pro-max-skill, claudekit, MIT.)
+
 ### 2. Pick the Screen Blueprint
 Choose the matching Screen Blueprint from `design-language` as the structural
 skeleton for the screen: `saas-landing`, `pricing`, `dashboard`, `auth`,
@@ -84,6 +99,10 @@ Before any pixels, define and write down:
 - **Study the `design-language` reference** (the user's growing library of
   preferred patterns and examples) before building, and apply it.
 
+Before you pick a kit, run the `design-language` **category-reflex test** and
+honor its **Global craft guardrails** — and remember delivered UI must pass
+**design-critic**'s deterministic tell-scan.
+
 ## Default Stack When Free to Choose
 When the project does not impose a framework: **Tailwind CSS + small,
 composable shadcn/ui-style components** — ALWAYS themed with the chosen kit's
@@ -91,6 +110,20 @@ tokens:
 - Kit fonts actually loaded (not just declared).
 - Kit OKLCH palette mapped to CSS variables.
 - Kit radius and shadow scales applied.
+
+**Token → Tailwind recipe.** Define each kit color as raw OKLCH *channels* in a
+CSS var (no `oklch()` wrapper), then wrap at use:
+```css
+:root { --accent: 0.55 0.16 250; }          /* L C H channels only */
+```
+```
+oklch(var(--accent))            /* solid */
+oklch(var(--accent) / <alpha>)  /* free opacity, same token */
+```
+Name the vars to match shadcn's expected token names (`--background`,
+`--foreground`, `--primary`, `--accent`, …) so `npx shadcn add` inherits the
+theme automatically instead of dropping its default palette. The **Design Token
+Architecture** section of the `design-language` skill is the source of truth.
 
 Shipping the default shadcn/Inter look counts as a failure. When the project
 already has a framework or design system, match it instead.
@@ -105,6 +138,23 @@ already has a framework or design system, match it instead.
 ## Accessibility as a Constraint, Not an Add-on
 - Semantic HTML, labeled controls, visible focus, logical tab order.
 - Color contrast meets WCAG AA; never rely on color alone.
+
+## Interaction & overlay patterns
+Reach for modern, copy-pasteable platform primitives instead of hand-rolled
+state (patterns informed by Impeccable, Paul Bakaus, Apache-2.0):
+- **Modals** — native `<dialog>` with `showModal()`; mark the rest of the page
+  `inert` so focus is trapped and background content is unreachable.
+- **Dropdowns / menus / popovers** — the **Popover API** plus **CSS Anchor
+  Positioning** with `@position-try` fallbacks. This lets the overlay render in
+  the top layer and escape `overflow: hidden` clipping — the single most common
+  dropdown bug in generated code, where the menu gets cut off by an ancestor.
+- **Keyboard groups** — roving `tabindex` for tabs, menus, and listboxes (one
+  tab stop; arrow keys move within).
+- **Skip link** — a "skip to content" link as the first focusable element.
+- **Destructive actions** — prefer an **undo toast over a confirm dialog**; let
+  people act and reverse, rather than gating every action behind a prompt.
+- **Focus rings** — style `:focus-visible`, never `:focus`, so rings show for
+  keyboard users without flashing on every mouse click.
 
 ## Build Discipline
 - Reuse existing design tokens/components; don't fork a parallel system.

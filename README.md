@@ -28,7 +28,7 @@ new projects and bring inherited ones up to standard, across any stack.
 | Skill | Purpose |
 |-------|---------|
 | `project-kickstart` | Bootstrap a new project or standardize an existing one |
-| `design-language` | The crafted, anti-"AI-look" design reference the design-engineer studies — 6 curated Design Kits (Editorial SaaS, Utility Dashboard, Premium Commerce, Warm Commerce, Dev Tool, Refined Premium) and 10 Screen Blueprints (grow it with your own references) |
+| `design-language` | The crafted, anti-"AI-look" design reference the design-engineer studies — 6 curated Design Kits (Editorial SaaS, Utility Dashboard, Premium Commerce, Warm Commerce, Dev Tool, Refined Premium), 10 Screen Blueprints, a 3-layer Design Token Architecture, global craft guardrails, and a deterministic "AI-look" tell checklist (grow it with your own references) |
 
 ## Install
 
@@ -88,4 +88,5 @@ Use the skill-auditor to scan our skills/ directory before we publish, and block
   `design-critic` reviews them — loop driven by the tech-lead, max 3 rounds,
   then it escalates to the user.
 - `skill-auditor` wraps **NVIDIA SkillSpector** (Apache-2.0, <https://github.com/NVIDIA/skillspector>) as an external tool — we integrate it, we don't vendor or copy its code. Static scans need no API key (the optional LLM semantic pass does); see `docs/SKILL-SECURITY.md` for setup.
+- The design system's token architecture, craft guardrails, and expanded tell checklist draw on two studied open-source references — **impeccable** (Paul Bakaus, Apache-2.0, <https://github.com/pbakaus/impeccable>) and **ui-ux-pro-max-skill** (claudekit, MIT, <https://github.com/nextlevelbuilder/ui-ux-pro-max-skill>) — adapted in our own words, not copied.
 - `author` / `owner` in `.claude-plugin/*.json` are set to `npalacios310` — change them if you fork.

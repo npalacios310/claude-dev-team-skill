@@ -60,6 +60,66 @@ Work through every dimension, on every screenshot, at every breakpoint:
    shrinking the desktop view.
 8. **Visual accessibility** — Text contrast looks AA-plausible, focus states are
    visible where captured, touch targets read as ≥44px on the 360px shot.
+9. **Deterministic tell scan** — Don't just eyeball it; walk the concrete
+   antipattern list (the same `"AI-look" Tells to Avoid` checklist in the
+   `design-language` skill) against every screenshot, item by item, so nothing
+   slips through on vibes. Check these highest-signal slop tells explicitly:
+   - One-sided accent border on a card; any accent border on a rounded element.
+   - Overused / monoculture fonts (Inter, Roboto, Fraunces, Space Grotesk, Geist,
+     Plus Jakarta), or one font driving the whole page.
+   - `background-clip: text` gradient text; purple/violet heading text or
+     purple→cyan / purple→pink gradients.
+   - Warm cream / beige default page background; nested cards (cards in cards).
+   - The icon-tile-above-heading "feature card" template repeated in a grid.
+   - Tracked-uppercase or accent eyebrow chip above an h1; 01/02/03 section markers
+     used as decoration.
+   - Bounce / overshoot / elastic easing; colored glow shadow on a dark background;
+     oversized italic-serif hero.
+   - Animating layout properties (`width`/`height`/`padding`/`margin`) instead of
+     `transform`/`opacity`.
+
+   Then run these **quality** checks in the same pass:
+   - Contrast below WCAG AA; gray text on a chromatic (colored) background.
+   - Line length over ~80ch; tight leading (line-height < 1.3); body text < 14px.
+   - Cramped padding — text flush against a bordered edge with no breathing room.
+   - A dropdown / tooltip / menu clipped by an `overflow: hidden` ancestor.
+
+   **Rule:** one confirmed slop tell = **Blocker**. A quality issue here = **Major**,
+   unless it's purely cosmetic (then Polish).
+10. **Color budget** — Surfaces roughly follow ~60% ground / ~30% secondary surface
+    / ~10% accent. Accent bleeding past ~10% (accent everywhere, multiple competing
+    accents) is a finding — the eye loses the one thing that should pop.
+11. **Interactive states present and distinct** — Where states are captured,
+    hover / focus / active / disabled / loading are each visible and visibly
+    different; a focus ring is present on focusable elements; error states render
+    inline next to the field, not only as a banner. Missing focus ring = Blocker
+    (accessibility); indistinct or missing other states = Major.
+12. **Category-reflex** — Does this look like the *first* thing you'd imagine for
+    this product category (first-order: fintech → navy-and-gold, dev tool →
+    terminal-dark), or the obvious anti-reference one tier deeper (second-order)?
+    If yes, that "modal look" is a **Major** (generic-by-default) even when no
+    single tell fires. (Mirrors the category-reflex test in `design-language`.)
+
+## Usability & cognitive-load pass
+
+Visuals can pass and the screen can still be hard to use. Run this pass too;
+findings map onto the same severity scale (a usability failure that blocks a core
+task = **Blocker (P0–P1)**; friction = **Major (P2)**; nit = **Polish (P3)**).
+
+- **Cognitive load (Miller's Law)** — Groups should hold ≤ ~4 items. More than ~4
+  visible options at a single decision point (nav, toolbar, choice set) is a
+  finding — name where the overload sits.
+- **Nielsen heuristics sweep** — Quick sanity check for clear violations:
+  visibility of system status, match to the real world, user control & undo,
+  consistency & standards, error prevention, recognition over recall. Flag the
+  ones the screenshot clearly breaks.
+- **Persona red-flags** — Pick 2–3 personas that fit this interface (e.g. a power
+  user, a first-timer, a keyboard-only / low-vision user) and report SPECIFIC,
+  located failures each would hit — not generic worries. "A keyboard user can't
+  reach the close button in `modal-768.png`" beats "consider accessibility."
+
+This pass draws on the open-source [Impeccable](https://github.com/pbakaus/impeccable)
+review framework (Paul Bakaus, Apache-2.0).
 
 ## Severity Scale
 
@@ -103,8 +163,12 @@ Every defect must have all four parts:
 - [ ] Ship  / [ ] Fix (defects below)  / [ ] Escalate to user (round 3, tradeoffs below)
 
 ### Defects
-| # | Severity | Where | What | Expected | Fix suggestion |
-|---|----------|-------|------|----------|----------------|
+| # | Severity | Dimension | Where | What | Expected | Fix suggestion |
+|---|----------|-----------|-------|------|----------|----------------|
+<!-- Dimension = the checklist item or heuristic hit (e.g. "tell scan", "color budget", "Miller's Law", "category-reflex"). Severity may carry a P0–P3 in parens. -->
+
+### Persona red-flags
+- [persona] → specific located failure (`file.png`, region)
 
 ### What improved since last round  <!-- only when round > 1 -->
 - …
